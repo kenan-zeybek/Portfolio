@@ -2,6 +2,6 @@
 
 Portfolio d'étudiant en BUT MMI (2e année, IUT du Puy-en-Velay) : audiovisuel, graphisme et web.
 
-Site en ligne : https://kenanzeybek38-hash.github.io/Portfolio/
+Site en ligne : https://kenan-zeybek.github.io/Portfolio/
 
 Site statique (HTML, CSS, JavaScript), sans dépendance : il suffit d'ouvrir `index.html`.
