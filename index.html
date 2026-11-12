@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kenan Zeybek · Portfolio</title>
+<meta name="description" content="Portfolio de Kenan Zeybek, étudiant en BUT MMI au Puy-en-Velay : audiovisuel, graphisme et web.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky-1:#FFE8A3; --sky-2:#FFD6C2; --sky-3:#FFC9E0; --sky-4:#F9C2F2;
+  --ink:#111111; --ink-2:#2B2B33; --muted:#55525C;
+  --paper:#FFFFFF; --paper-2:#FFF8EE;
+  --sea:#1F6E9C; --sea-2:#2E86BE; --foam:#A9D3F2; --deep:#103E5C;
+  --accent:#E8412C; --sun:#FFB84D;
+  --radius:22px; --border:2.5px solid var(--ink);
+  --shadow:6px 6px 0 var(--ink);
+  --font-d:'Lilita One', 'Arial Black', sans-serif;
+  --font-b:'Nunito', system-ui, sans-serif;
+}
+:root{color-scheme:light}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font-b);color:var(--ink);background:var(--sky-1);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:var(--ink)}
+:focus-visible{outline:3px solid var(--sea);outline-offset:3px;border-radius:8px}
+
+/* ---------- SKY (fixed background + parallax clouds) ---------- */
+.sky{position:fixed;inset:0;z-index:-2;background:linear-gradient(180deg,var(--sky-1) 0%,var(--sky-2) 38%,var(--sky-3) 70%,var(--sky-4) 100%)}
+.sun{position:absolute;width:340px;height:340px;border-radius:50%;right:-60px;top:-80px;background:radial-gradient(circle,#FFF6CC 0%,rgba(255,230,160,.55) 40%,rgba(255,220,150,0) 70%)}
+.cloud-layer{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.cl{position:absolute;background:no-repeat center/contain;will-change:transform;animation:drift linear infinite alternate}
+@keyframes drift{from{translate:-30px 0}to{translate:40px 0}}
+
+/* ---------- NAV ---------- */
+.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;display:flex;align-items:center;gap:6px;padding:6px;background:rgba(255,255,255,.9);border:var(--border);border-radius:999px;box-shadow:4px 4px 0 var(--ink);backdrop-filter:blur(8px);max-width:calc(100% - 24px)}
+.nav a{text-decoration:none;font-weight:800;font-size:15px;padding:10px 16px;border-radius:999px;white-space:nowrap;transition:background .2s,color .2s}
+.nav a:hover{background:var(--sky-1)}
+.nav a[aria-current="page"]{background:var(--ink);color:#fff}
+.nav .brand{display:grid;place-items:center;width:46px;height:46px;padding:0;margin-right:4px;border-radius:50%;background:var(--ink);color:#fff;font-family:var(--font-d);font-weight:400;font-size:19px;letter-spacing:.02em;transition:transform .35s cubic-bezier(.3,1.6,.5,1),background .2s}
+.nav .brand:hover{transform:rotate(-12deg) scale(1.08);background:var(--accent);color:#fff}
+.nav .brand[aria-current="page"]{background:var(--ink);color:#fff;box-shadow:0 0 0 3px var(--sun)}
+@media (max-width:640px){
+  .nav{top:10px;gap:2px;padding:4px}
+  .nav .brand{width:40px;height:40px;margin-right:0;font-size:17px}
+  .nav a{font-size:14px;padding:10px 12px}
+}
+
+/* ---------- VIEWS ---------- */
+main{min-height:100vh}
+.view{display:none}
+.view.active{display:block}
+.wrap{width:min(1120px,100% - 32px);margin-inline:auto}
+
+/* ---------- HERO ---------- */
+.hero{position:relative;min-height:min(86vh,820px);display:flex;align-items:center;padding:120px 0 40px}
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:center}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-weight:900;font-size:13px;letter-spacing:.12em;text-transform:uppercase;background:#fff;border:var(--border);border-radius:999px;padding:7px 14px}
+.kicker .dot{width:9px;height:9px;border-radius:50%;background:#2DBE60;box-shadow:0 0 0 3px rgba(45,190,96,.25);animation:pulse 2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 7px rgba(45,190,96,0)}}
+.hero h1{font-family:var(--font-d);font-weight:400;font-size:clamp(56px,10vw,128px);line-height:.88;margin:22px 0 18px;letter-spacing:.005em}
+.hero h1 span{display:block}
+.hero h1 .l2{color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:6px 6px 0 var(--ink)}
+.hero .lead{font-size:clamp(18px,2vw,21px);font-weight:700;line-height:1.5;max-width:560px;margin:0 0 26px;color:var(--ink-2)}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:900;font-size:16px;padding:14px 22px;border:var(--border);border-radius:999px;background:#fff;box-shadow:4px 4px 0 var(--ink);transition:transform .15s,box-shadow .15s;cursor:pointer;color:var(--ink)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+.btn.dark{background:var(--ink);color:#fff}
+.btn svg{width:18px;height:18px}
+
+.portrait{position:relative;justify-self:center;width:min(340px,80vw);aspect-ratio:1}
+.portrait-frame{position:absolute;inset:0;border-radius:50%;border:var(--border);background:linear-gradient(160deg,#fff 0%,var(--sky-2) 100%);box-shadow:var(--shadow);overflow:hidden;display:grid;place-items:center}
+.portrait-frame img{width:100%;height:100%;object-fit:cover;object-position:50% 50%;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.portrait:hover .portrait-frame img{transform:scale(1.04)}
+.portrait-ph{text-align:center;padding:24px}
+.portrait-ph b{display:block;font-family:var(--font-d);font-weight:400;font-size:80px;line-height:1}
+.portrait-ph small{display:block;font-weight:800;font-size:13px;color:var(--muted);margin-top:8px}
+.sticker{position:absolute;font-weight:900;font-size:14px;background:var(--sun);border:var(--border);border-radius:14px;padding:8px 12px;box-shadow:3px 3px 0 var(--ink);white-space:nowrap}
+.sticker.s1{left:-18px;top:22%;rotate:-8deg;animation:bob 4s ease-in-out infinite}
+.sticker.s2{right:-14px;bottom:18%;rotate:7deg;background:#fff;animation:bob 4.6s ease-in-out infinite reverse}
+.sticker.s3{left:12%;bottom:-6px;rotate:-3deg;background:var(--foam);animation:bob 5s ease-in-out infinite}
+@keyframes bob{50%{translate:0 -8px}}
+
+
+
+@media (max-width:860px){
+  .hero{padding:88px 0 20px;min-height:0}
+  .hero h1{margin:16px 0 12px}
+  .hero .lead{margin-bottom:20px;font-size:17px}
+  .btn{padding:12px 17px;font-size:15px}
+  .btns{gap:10px}
+  .hero-grid{grid-template-columns:1fr;gap:30px}
+  .portrait{order:-1;width:min(190px,52vw)}
+  .sticker{font-size:12px;padding:6px 9px}
+}
+
+/* ---------- SECTIONS ---------- */
+section{position:relative}
+.sec{padding:90px 0}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:34px}
+.title{font-family:var(--font-d);font-weight:400;font-size:clamp(42px,6vw,72px);line-height:.95;margin:0;color:#fff;-webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill;text-shadow:5px 5px 0 var(--ink)}
+.title.dark{color:var(--ink);-webkit-text-stroke:0;text-shadow:none}
+.sec.peek{padding-top:10px}
+@media (max-width:860px){.sec.peek{padding-top:44px}}
+.sec.peek .grid .card{animation:peekup 1.1s cubic-bezier(.2,.8,.2,1) both}
+.sec.peek .grid .card:nth-child(2){animation-delay:.12s}.sec.peek .grid .card:nth-child(3){animation-delay:.24s}
+@keyframes peekup{from{transform:translateY(60px)}}
+.sub{font-weight:700;font-size:18px;color:var(--ink-2);max-width:520px;margin:10px 0 0;line-height:1.5}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+@media (max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.grid{grid-template-columns:1fr}}
+.card{position:relative;display:flex;flex-direction:column;text-decoration:none;background:#fff;border:var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+.card:hover{transform:translate(-4px,-6px) rotate(-.6deg);box-shadow:10px 12px 0 var(--ink)}
+.card .thumb{position:relative;aspect-ratio:16/10;overflow:hidden;border-bottom:var(--border);background:var(--paper-2)}
+.card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.card .thumb.contain img{object-fit:contain;padding:14px}
+.card:hover .thumb img{transform:scale(1.06)}
+.card .play{position:absolute;left:14px;bottom:14px;width:44px;height:44px;border-radius:50%;background:#fff;border:var(--border);display:grid;place-items:center}
+.card .play svg{width:16px;height:16px;margin-left:3px}
+.card .body{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card h3{margin:0;font-family:var(--font-d);font-weight:400;font-size:25px;line-height:1.05}
+.card p{margin:0;font-weight:600;font-size:15px;line-height:1.45;color:var(--ink-2)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:8px}
+.chip{font-weight:800;font-size:12px;padding:4px 10px;border-radius:999px;border:2px solid var(--ink);background:var(--paper-2)}
+.chip.cat{background:var(--ink);color:#fff}
+
+/* filter tabs */
+.tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px}
+.tab{cursor:pointer;font-weight:900;font-size:16px;padding:12px 20px;border:var(--border);border-radius:999px;background:#fff;color:var(--ink);box-shadow:3px 3px 0 var(--ink);transition:transform .15s,box-shadow .15s,background .2s,color .2s}
+.tab:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.tab[aria-pressed="true"]{background:var(--ink);color:#fff}
+.tab .n{opacity:.6;margin-left:4px}
+.grid-stage{position:relative}
+.puff{position:absolute;inset:-30px;pointer-events:none;z-index:5;display:none}
+.puff.go{display:block}
+.puff span{position:absolute;border-radius:50%;background:#fff;box-shadow:inset -10px -14px 0 rgba(170,190,220,.35);animation:puff .9s cubic-bezier(.3,.7,.3,1) forwards;opacity:0}
+@keyframes puff{0%{opacity:0;transform:scale(.2)}35%{opacity:1;transform:scale(1)}70%{opacity:1;transform:scale(1.05)}100%{opacity:0;transform:scale(1.25) translateY(-20px)}}
+
+/* about */
+.about{display:grid;grid-template-columns:1.1fr .9fr;gap:30px}
+@media (max-width:900px){.about{grid-template-columns:1fr}}
+.panel{background:#fff;border:var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:28px}
+.panel h3{font-family:var(--font-d);font-weight:400;font-size:28px;margin:0 0 14px}
+.panel p{font-weight:600;font-size:17px;line-height:1.65;margin:0 0 14px;color:var(--ink-2)}
+.panel p:last-child{margin-bottom:0}
+.hl{background:linear-gradient(transparent 58%,var(--sun) 58%);font-weight:800;color:var(--ink)}
+.skills{display:flex;flex-direction:column;gap:18px}
+.lvl h4{margin:0 0 10px;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.lvl .chips{padding:0}
+.lvl .chip{font-size:14px;padding:6px 12px;background:#fff}
+.lvl.top .chip{background:var(--sun)}
+.lvl.mid .chip{background:var(--foam)}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:6px}
+.fact{border:2px solid var(--ink);border-radius:16px;padding:12px 14px;background:var(--paper-2)}
+.fact b{display:block;font-family:var(--font-d);font-weight:400;font-size:22px}
+.fact span{font-weight:700;font-size:13.5px;color:var(--ink-2)}
+
+/* ---------- SEA (footer / contact) ---------- */
+.sea{position:relative;margin-top:60px;background:var(--sea);color:#fff;padding:80px 0 40px}
+.waves{position:absolute;left:0;right:0;top:-78px;height:80px;overflow:hidden}
+.waves svg{position:absolute;bottom:0;width:200%;height:80px}
+.waves .w1{fill:var(--foam);animation:wave 14s linear infinite}
+.waves .w2{fill:var(--sea);animation:wave 9s linear infinite reverse;bottom:-4px}
+@keyframes wave{to{transform:translateX(-50%)}}
+.bubbles{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.bubbles span{position:absolute;bottom:-40px;border-radius:50%;border:2px solid rgba(255,255,255,.75);background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.9) 0 12%,rgba(255,255,255,.12) 13%);animation:rise linear infinite}
+@keyframes rise{to{transform:translateY(-120vh) translateX(30px)}}
+.contact{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+@media (max-width:860px){.contact{grid-template-columns:1fr}}
+.contact .title{color:#fff}
+.contact p{font-weight:700;font-size:18px;line-height:1.55;color:#E6F3FC;max-width:480px}
+.links{display:flex;flex-direction:column;gap:14px}
+.link{display:flex;align-items:center;gap:14px;text-decoration:none;background:#fff;color:var(--ink);border:var(--border);border-radius:18px;padding:16px 18px;box-shadow:5px 5px 0 var(--deep);transition:transform .15s,box-shadow .15s;min-width:0}
+.link:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--deep)}
+.link .ic{flex:none;width:44px;height:44px;border-radius:12px;background:var(--sky-1);border:2px solid var(--ink);display:grid;place-items:center}
+.link .ic svg{width:22px;height:22px}
+.link b{display:block;font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.link span{display:block;font-weight:800;font-size:16px;overflow-wrap:anywhere}
+.copy{margin-left:auto;flex:none;cursor:pointer;font-weight:900;font-size:13px;border:2px solid var(--ink);border-radius:999px;background:var(--paper-2);padding:8px 12px}
+/* page Contact : la mer remplit l'écran, pas besoin de scroller */
+body.is-contact .sea{margin-top:0;min-height:100vh;min-height:100svh;padding:110px 0 28px;display:flex;flex-direction:column;justify-content:center}
+body.is-contact .sea .waves{display:none}
+body.is-contact .sea .foot{margin-top:40px}
+body.is-contact #v-contact{display:none}
+body.is-contact main{min-height:0}
+.sea .wrap{position:relative;z-index:1}
+@media (max-width:640px){body.is-contact .sea{padding-top:84px}body.is-contact .sea .foot{display:none}body.is-contact .contact{gap:24px}body.is-contact .contact p{font-size:16px}}
+.foot{position:relative;margin-top:60px;padding-top:24px;border-top:2px solid rgba(255,255,255,.3);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-weight:700;font-size:14px;color:#CFE6F5}
+
+/* ---------- PROJECT PAGE ---------- */
+.proj{padding:120px 0 40px}
+.back{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:900;font-size:15px;background:#fff;border:var(--border);border-radius:999px;padding:9px 16px;box-shadow:3px 3px 0 var(--ink);margin-bottom:28px}
+.back svg{width:16px;height:16px}
+.proj h1{font-family:var(--font-d);font-weight:400;font-size:clamp(44px,7vw,88px);line-height:.92;margin:12px 0 14px}
+.proj .tagline{font-weight:700;font-size:20px;line-height:1.5;color:var(--ink-2);max-width:760px;margin:0 0 22px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:34px}
+.meta .chip{font-size:13.5px;padding:6px 12px;background:#fff}
+.media{display:grid;gap:22px;margin-bottom:34px}
+.frame{background:#fff;border:var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.frame video{width:100%;background:#000}
+.frame img{width:100%;height:auto}
+.frame figcaption{font-weight:800;font-size:14px;padding:12px 16px;border-top:var(--border);background:var(--paper-2)}
+.media.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.media.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.media.vertical{grid-template-columns:minmax(0,380px) 1fr;align-items:start}
+@media (max-width:760px){.media.two,.media.three,.media.vertical{grid-template-columns:1fr}}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+@media (max-width:760px){.cols{grid-template-columns:1fr}}
+.panel ul{margin:0;padding-left:20px}
+.panel li{font-weight:600;font-size:16.5px;line-height:1.6;color:var(--ink-2);margin-bottom:6px}
+.credits{font-size:15px}
+.ext{display:inline-flex;margin-top:16px}
+.pn{display:flex;justify-content:space-between;gap:14px;margin-top:40px;flex-wrap:wrap}
+.pn a{flex:1 1 260px;text-decoration:none;background:#fff;border:var(--border);border-radius:18px;padding:16px 20px;box-shadow:4px 4px 0 var(--ink);transition:transform .15s}
+.pn a:hover{transform:translateY(-3px)}
+.pn small{display:block;font-weight:900;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.pn b{font-family:var(--font-d);font-weight:400;font-size:22px}
+.pn .next{text-align:right}
+
+/* ---------- REVEAL ---------- */
+.rv{opacity:0;transform:translateY(34px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+/* ---------- CLOUD TRANSITION ---------- */
+.curtain{position:fixed;inset:0;z-index:100;pointer-events:none}
+.curtain .c{position:absolute;width:62vmax;height:62vmax;border-radius:50%;background:radial-gradient(circle at 38% 35%,#fff 0 55%,#FFF4F8 70%,#F3E6F6 100%);box-shadow:inset -3vmax -4vmax 0 rgba(200,180,220,.25);transition:transform .7s cubic-bezier(.7,0,.25,1)}
+.curtain.closed{pointer-events:all}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<div class="sky" aria-hidden="true"><div class="sun"></div></div>
+<div class="cloud-layer" id="clouds" aria-hidden="true"></div>
+
+
+<nav class="nav" aria-label="Navigation principale">
+  <a class="brand" href="#accueil" data-route="accueil" aria-label="Accueil" title="Retour à l'accueil">KZ</a>
+  <a href="#projets" data-route="projets">Projets</a>
+  <a href="#a-propos" data-route="a-propos">À propos</a>
+  <a href="#contact" data-route="contact">Contact</a>
+</nav>
+
+<main id="main">
+
+  <!-- ============ ACCUEIL ============ -->
+  <div class="view" id="v-accueil">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <span class="kicker rv"><span class="dot"></span>Recherche un stage · avril 2027</span>
+          <h1 class="rv"><span>Kenan</span><span class="l2">Zeybek</span></h1>
+          <p class="lead rv">Étudiant en 2<sup>e</sup> année de BUT MMI au Puy-en-Velay. Je crée des vidéos de A à Z, du cadrage au montage, et des identités visuelles qui ont du caractère.</p>
+          <div class="btns rv">
+            <a class="btn dark" href="#projets">Voir mes projets
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="btn" href="#contact">Me contacter</a>
+          </div>
+        </div>
+        <div class="portrait rv">
+          <div class="portrait-frame">
+            <img src="assets/img/photo-rond.webp" alt="Kenan Zeybek, appareil photo en main" width="600" height="600">
+          </div>
+          <span class="sticker s1">Montage vidéo</span>
+          <span class="sticker s2">Identité visuelle</span>
+          <span class="sticker s3">HTML / CSS</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec peek">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <div>
+            <h2 class="title">À la une</h2>
+            <p class="sub">Mes trois dernières productions audiovisuelles, tournées et montées en équipe.</p>
+          </div>
+          <a class="btn" href="#projets">Tous les projets</a>
+        </div>
+        <div class="grid" id="featured"></div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <div>
+            <h2 class="title">Trois univers</h2>
+            <p class="sub">L'image animée d'abord, mais aussi le print et le web.</p>
+          </div>
+        </div>
+        <div class="grid" id="univers"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ PROJETS ============ -->
+  <div class="view" id="v-projets">
+    <section class="sec" style="padding-top:130px">
+      <div class="wrap">
+        <div class="sec-head rv">
+          <div>
+            <h1 class="title">Mes projets</h1>
+            <p class="sub">Projets réalisés en BUT MMI, entre 2025 et 2026. Clique sur un projet pour voir le détail et mon rôle.</p>
+          </div>
+        </div>
+        <div class="tabs" role="group" aria-label="Filtrer les projets" id="tabs"></div>
+        <div class="grid-stage">
+          <div class="grid" id="all"></div>
+          <div class="puff" id="puff" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ PROJET (détail) ============ -->
+  <div class="view" id="v-projet">
+    <article class="proj"><div class="wrap" id="proj"></div></article>
+  </div>
+
+  <!-- ============ A PROPOS ============ -->
+  <div class="view" id="v-a-propos">
+    <section class="sec" style="padding-top:130px">
+      <div class="wrap">
+        <div class="sec-head rv"><h1 class="title">Qui suis-je ?</h1></div>
+        <div class="about">
+          <div class="panel rv">
+            <h3>Kenan, 2<sup>e</sup> année de BUT MMI</h3>
+            <p>Je suis étudiant en BUT Métiers du Multimédia et de l'Internet à l'IUT du Puy-en-Velay (Université Clermont Auvergne). La <span class="hl">création numérique</span> est devenue une vraie passion, et le BUT MMI m'a permis d'en explorer toutes les facettes.</p>
+            <p>Avant même la formation, j'ai <span class="hl">monté des vidéos pour des streamers et des YouTubeurs</span>. C'est là que j'ai compris à quel point le montage fait la différence entre un contenu qu'on oublie et un contenu qu'on regarde jusqu'au bout.</p>
+            <p>Aujourd'hui, je tourne, je monte, je dessine des logos et je code des sites. Je continue à me former sur de nouveaux outils comme After Effects ou Blender, et je me lance volontiers dans des projets qui me poussent à progresser.</p>
+            <p>Je cherche un <span class="hl">stage de 10 semaines à partir de mi-avril 2027</span> (début flexible, fin avant juillet), idéalement en audiovisuel ou en création numérique.</p>
+          </div>
+          <div class="panel rv">
+            <h3>Mes outils</h3>
+            <div class="skills">
+              <div class="lvl top"><h4>Très bonne maîtrise</h4><div class="chips"><span class="chip">CapCut</span><span class="chip">Canva</span><span class="chip">Photoshop</span><span class="chip">Illustrator</span></div></div>
+              <div class="lvl mid"><h4>Bon niveau</h4><div class="chips"><span class="chip">HTML</span><span class="chip">CSS</span></div></div>
+              <div class="lvl"><h4>En apprentissage</h4><div class="chips"><span class="chip">After Effects</span><span class="chip">Figma</span><span class="chip">Blender</span></div></div>
+            </div>
+            <h3 style="margin-top:26px">En bref</h3>
+            <div class="facts">
+              <div class="fact"><b>Anglais B2</b><span>Turc A1</span></div>
+              <div class="fact"><b>Arbitre</b><span>de football officiel</span></div>
+              <div class="fact"><b>Bénévole</b><span>kermesse caritative</span></div>
+              <div class="fact"><b>Passions</b><span>audiovisuel, sport, jeux vidéo</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============ CONTACT (vue seule = scroll vers la mer) ============ -->
+  <div class="view" id="v-contact"><div style="height:120px"></div></div>
+
+</main>
+
+<footer class="sea" id="contact-sec">
+  <div class="waves" aria-hidden="true">
+    <svg class="w1" viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0 40 C120 10 240 70 360 40 S600 10 720 40 S960 70 1080 40 S1320 10 1440 40 V80 H0Z"/></svg>
+    <svg class="w2" viewBox="0 0 1440 80" preserveAspectRatio="none" style="width:200%"><path d="M0 50 C180 20 300 80 480 50 S780 20 960 50 S1260 80 1440 50 V80 H0Z"/></svg>
+  </div>
+  <div class="bubbles" id="bubbles" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="contact">
+      <div class="rv">
+        <h2 class="title">On en parle ?</h2>
+        <p>Je recherche un stage de 10 semaines à partir de mi-avril 2027, en audiovisuel ou en création numérique. Écris-moi, je réponds vite.</p>
+      </div>
+      <div class="links rv">
+        <div class="link">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
+          <a href="mailto:zeybekkenan38@gmail.com" style="text-decoration:none;min-width:0"><b>E-mail</b><span>zeybekkenan38@gmail.com</span></a>
+          <button class="copy" type="button" data-copy="zeybekkenan38@gmail.com">Copier</button>
+        </div>
+        <a class="link" href="https://www.linkedin.com/in/kenan-zeybek-7a332b403" target="_blank" rel="noopener">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg></span>
+          <span><b>LinkedIn</b><span>kenan-zeybek</span></span>
+        </a>
+        <div class="link">
+          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+          <span><b>Basé à</b><span>Le Puy-en-Velay (43)</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span>© 2026 Kenan Zeybek</span><span>Site conçu sur le thème du ciel et de la mer</span></div>
+  </div>
+</footer>
+
+<div class="curtain" id="curtain" aria-hidden="true"></div>
+
+<script>
+(() => {
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const play = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 4l14 8-14 8z"/></svg>';
+const arrowL = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>';
+const I = 'assets/img/', V = 'assets/v/';
+
+/* ======================= DONNEES DES PROJETS ======================= */
+const CATS = {audiovisuel:'Audiovisuel', graphisme:'Graphisme & print', web:'Web'};
+const P = [
+ {id:'aigles', cat:'audiovisuel', title:'Prends place', sub:'Film de sensibilisation pour Les Aigles du Velay',
+  card:'Une minute pour changer le regard sur le handibasket, tournée pour un club local.',
+  thumb:I+'aigles-poster.jpg', video:true, year:'2026', frame:'BUT 2 · SAÉ', team:'Équipe de 6', tools:['Caméra','Montage'],
+  tagline:"Un film court de sensibilisation, réalisé dans le cadre d'une communication RSE pour Les Aigles du Velay, le club de handibasket du Puy-en-Velay.",
+  media:[{v:V+'aigles.mp4',poster:I+'aigles-poster.jpg',cap:'« Prends place » · film complet'}],
+  context:"En 2e année de BUT MMI, nous avons travaillé sur une communication RSE autour des Aigles du Velay. Le film « Prends place » invite à regarder le handibasket autrement, du couloir jusqu'au terrain.",
+  role:['Cadrage et prise de vue, avec Evan Pouteau','Montage du film, avec Serena Sélesque'],
+  credits:'Scénario : Dorian Extier, Evan Pouteau, Aaron Zerrouk · Caméra : Kenan Zeybek, Evan Pouteau · Son : Serena Sélesque, Axel Rodriguez · Lumière : Serena Sélesque, Aaron Zerrouk · Acteurs : Aaron Zerrouk, Dorian Extier, Axel Rodriguez · Montage : Kenan Zeybek, Serena Sélesque'},
+
+ {id:'mauboussin', cat:'audiovisuel', title:'Reine de la liberté', sub:'Publicité pour une bague Mauboussin imaginaire',
+  card:"La pub d'une bague de luxe qui paie sans contact, tournée dans les rues du Puy.",
+  thumb:I+'mauboussin-poster.jpg', video:true, year:'2025-2026', frame:'BUT 1', team:'Équipe de 4', tools:['CapCut','Logic Pro'],
+  tagline:"Une publicité pour un produit fictif de Mauboussin : une bague luxueuse capable de payer sans contact grâce à une sécurité biométrique.",
+  media:[{v:V+'mauboussin.mp4',poster:I+'mauboussin-poster.jpg',cap:'« Reine de la liberté » · publicité complète'}],
+  context:"Ce spot faisait partie d'une campagne de communication complète autour d'un produit Mauboussin inventé. C'est ma deuxième production audiovisuelle réalisée de A à Z.",
+  role:['Cadrage et prise de son, avec Evan Pouteau et Aaron Esso','Montage du film','Création de la musique'],
+  credits:'Cadrage et son : Evan Pouteau, Kenan Zeybek, Aaron Esso · Acteurs : Aaron Esso, Heaven Ghobrial · Voix off : Heaven Ghobrial · Montage et musique : Kenan Zeybek · Lieux : La Gloriette, Le Théâtre, La Mie Câline, Promod, La Constantinoise'},
+
+ {id:'basket', cat:'audiovisuel', title:'Le tuto basket', sub:'Tutoriel humoristique pour apprendre le basket',
+  card:'Ma première production de A à Z : un faux tuto, un vrai terrain et beaucoup de second degré.',
+  thumb:I+'basket-poster.jpg', video:true, year:'2025-2026', frame:'BUT 1', team:'Équipe de 6', tools:['CapCut','Logic Pro'],
+  tagline:"Un tutoriel pour apprendre à jouer au basket, dans un ton évidemment humoristique.",
+  media:[{v:V+'basket.mp4',poster:I+'basket-poster.jpg',cap:'Le tuto basket · vidéo complète'}],
+  context:"C'est ma première production audiovisuelle réalisée de A à Z en équipe de 6 : écriture, cadrage, son, musique et montage.",
+  role:['Montage complet de la vidéo','Acteur dans la vidéo'],
+  credits:'Caméra : Innssaf Sadiki · Son : Lamia Chorfa, Tristan Mazelier, Dorian Extier · Éclairage : Tristan Mazelier · Acteurs : Nora Dryab, Dorian Extier, Kenan Zeybek · Montage : Kenan Zeybek'},
+
+ {id:'interface', cat:'graphisme', also:['audiovisuel'], title:'Interface n°26', sub:'Journal étudiant du département MMI',
+  card:'Couverture, 4e de couverture et gabarits pour le journal des étudiants, plus un format court vidéo.',
+  thumb:I+'int-1.webp', contain:true, year:'2026', frame:'BUT 1', team:'Projet collectif', tools:['InDesign','Illustrator'],
+  tagline:"Interface est le journal des étudiants MMI du Puy-en-Velay. J'ai créé la couverture du numéro 26 et proposé des modèles de mise en page pour les articles.",
+  media:[
+    {grid:'two', items:[{img:I+'int-1.webp',cap:'1re de couverture'},{img:I+'int-6.webp',cap:'4e de couverture'}]},
+    {grid:'three', items:[{img:I+'int-2.webp',cap:'Gabarit article · page 1'},{img:I+'int-3.webp',cap:'Gabarit article · double titre'},{img:I+'int-5.webp',cap:'Gabarit article · image pleine'}]},
+    {grid:'vertical', items:[{v:V+'interface.mp4',poster:I+'interface-poster.jpg',cap:'Format court vertical sur la création du journal'}], note:true}
+  ],
+  context:"Tous les étudiants participent à la création du journal : rédaction, mise en page, publication. J'étais chargé de communication sur le projet.",
+  role:["Création de la 1re et de la 4e de couverture sur Illustrator et InDesign","Conception de gabarits d'articles sur InDesign (titre, chapeau, paragraphes, image, sponsor)","Rédaction d'articles","Scénario, tournage et montage des contenus vidéo"]},
+
+ {id:'zk', cat:'graphisme', title:'Logo ZK & affiche', sub:'Mon identité personnelle, du croquis à la charte',
+  card:"Un monogramme Z + K né d'un haltère, sa charte graphique et une affiche sur ma passion.",
+  thumb:I+'logo-zk.png', contain:true, year:'2025', frame:'BUT 1', team:'Projet individuel', tools:['Illustrator','Photoshop'],
+  tagline:"Créer un logo à partir de mes initiales, le décliner dans une charte graphique, puis l'intégrer dans une affiche sur une passion : la musculation.",
+  media:[
+    {grid:'two', items:[{img:I+'logo-zk.png',cap:'Logo final',contain:true},{img:I+'affiche.webp',cap:'Affiche « Discipline »'}]},
+    {grid:'three', items:[{img:I+'zk-croquis.webp',cap:'Croquis papier'},{img:I+'zk-mood.webp',cap:'Moodboard'},{img:I+'zk-charte.webp',cap:'Charte graphique'}]}
+  ],
+  context:"Le logo et l'affiche devaient être cohérents entre eux. J'ai choisi la musculation comme thème, avec un moodboard inspiré des marques sportives.",
+  role:["Croquis papier puis vectorisation sur Illustrator","Barre centrale de l'haltère déformée pour dessiner le Z et la branche du K","Rouge et noir pour évoquer la passion et la discipline","Charte graphique : couleurs (HEX, RGB, CMJN), zone d'exclusion de 3 mm, typographie Ethnocentric modifiée, version 16 × 16 px","Affiche « Discipline » sur Photoshop intégrant le logo"]},
+
+ {id:'thepit', cat:'graphisme', title:'The Pit', sub:'Logo pour une marque de burgers smash',
+  card:"Un logo brut et punk pour une marque de burgers fictive qui ne veut ressembler à personne.",
+  thumb:I+'pit.webp', contain:true, year:'2026', frame:'BUT 1 · Conception graphique', team:'Projet individuel', tools:['Illustrator'],
+  tagline:"Brief : The Pit, une marque de burgers smash fondée par des passionnés de punk et de hardcore, veut une identité qui « claque, dérange un peu et reste gravée ».",
+  media:[{grid:'three', items:[{img:I+'pit.webp',cap:'Version principale',contain:true},{img:I+'pit-nb.webp',cap:'Version noir et blanc',contain:true},{img:I+'pit-small.png',cap:'Version petit format',contain:true}]}],
+  context:"Exercice de conception graphique : la marque refuse les codes habituels du burger (mascotte souriante, rouge et jaune). Ses valeurs : brut, intense, solidaire.",
+  role:["Logo emblème avec un lettrage déchiré et une main griffue","Palette violet et noir, loin des couleurs classiques de la restauration rapide","Déclinaisons demandées par le brief : version principale, version noir et blanc, petit format"]},
+
+ {id:'djam', cat:'graphisme', title:"La D'jam", sub:'Identité pour les jeunes amis du musée Crozatier',
+  card:"Des versions réduites du logo et une carte d'adhérent pour une vraie association du Puy-en-Velay.",
+  thumb:I+'djam-logo.webp', contain:true, year:'2025-2026', frame:'BUT 1', tools:['Illustrator','Photoshop','Canva'],
+  tagline:"La Société des Amis du Musée Crozatier (SAMC) est venue à l'IUT demander aux étudiants un nouveau logo pour La D'jam, son groupe de jeunes adhérents, avec ses déclinaisons et une carte d'adhérent.",
+  media:[
+    {img:I+'djam-planche.webp',cap:"Planche de rendu : logo final, versions 32 × 32 px et 16 × 16 px, carte d'adhérent recto et verso"},
+    {grid:'two', items:[{img:I+'djam-logo.webp',cap:"Le logo « D'la Jam »",contain:true}]}
+  ],
+  context:"Une commande réelle : l'association a présenté sa demande à notre promotion de 1re année, et chaque binôme a proposé son identité.",
+  role:["Versions réduites du logo en 32 × 32 px et 16 × 16 px, lisibles en tout petit","Carte d'adhérent recto et verso : colonnes du musée au recto, nom, prénom, validité et coordonnées de l'association au verso"]},
+
+ {id:'fortnite', cat:'web', title:'Fortnite OG', sub:'Site dynamique sur la saison 8 de Fortnite',
+  card:"Un site en PHP et MySQL avec espace admin, compte à rebours et mini-jeu en JavaScript.",
+  thumb:I+'ftn.webp', year:'2026', frame:'BUT 1 · SAÉ 203', team:'Projet individuel', tools:['HTML','CSS','JavaScript','PHP','MySQL'],
+  tagline:"Un site de fan sur la saison 8 du chapitre 1 de Fortnite, avec des pages générées depuis une base de données.",
+  media:[{img:I+'ftn.webp',cap:"Page d'accueil"}],
+  context:"Dans le cadre de la SAÉ 203, il fallait réaliser un site dynamique connecté à une base de données, avec une partie administration.",
+  role:["Pages Lieux, Personnages, Constructions, Activités et Histoire générées en PHP depuis MySQL","Espace admin avec connexion : ajout et suppression de personnages","Compte à rebours avant la prochaine saison en JavaScript","Mini-jeu « mini potion » en JavaScript"],
+  link:{href:'https://sae203-fortnite.lovestoblog.com/',label:'Voir le site en ligne'}},
+
+ {id:'fitness', cat:'web', title:'Fitness', sub:'Site de 4 pages sur la musculation',
+  card:"Un calculateur calorique en PHP et un formulaire d'inscription, du wireframe à la mise en ligne.",
+  thumb:I+'fitness-poster.jpg', video:true, year:'2025', frame:'BUT 1 · SAÉ 105', team:'Projet individuel', tools:['HTML','CSS','PHP'],
+  tagline:"Un site sur la musculation : présentation du sport, de ses disciplines, un calculateur de dépense calorique et un formulaire d'inscription.",
+  media:[{v:V+'fitness.mp4',poster:I+'fitness-poster.jpg',cap:'Démonstration du site'},
+    {grid:'three', items:[{img:I+'fit-wire.webp',cap:"Wireframe de l'accueil"},{img:I+'fit-1.webp',cap:"En-tête de l'accueil"},{img:I+'fit-3.webp',cap:'Bannière vers le calculateur'}]}],
+  context:"Pour la SAÉ 105, j'ai choisi la musculation, un sport qui m'intéresse, et conçu le site du wireframe jusqu'au code.",
+  role:["Page 1 : présentation du sport et de ses avantages, bannière vers le calculateur","Page 2 : bodybuilding, powerlifting et haltérophilie, avec des articles","Page 3 : algorithme PHP qui calcule la dépense journalière et conseille selon l'objectif","Page 4 : formulaire d'inscription (données stockées dans un fichier texte) et vidéo pour débutants"]},
+
+ {id:'trombi', cat:'web', title:'Trombinoscope Star Wars', sub:'Exercice de CSS avancé',
+  card:"Des cartes de personnages qui se retournent au survol, en pur CSS.",
+  thumb:I+'trombi-poster.jpg', video:true, year:'2026', frame:'BUT 1', team:'Projet individuel', tools:['HTML','CSS'],
+  tagline:"Un trombinoscope des personnages de Star Wars pour m'entraîner aux animations et aux transformations CSS.",
+  media:[{v:V+'trombi.mp4',poster:I+'trombi-poster.jpg',cap:'Démonstration des animations'}],
+  context:"Exercice d'entraînement au CSS avancé : grille de cartes, effets au survol et retournement en 3D.",
+  role:["Grille de cartes responsive","Retournement des cartes en 3D au survol pour afficher la description","Mise en valeur des personnages du côté obscur par une couleur dédiée"]}
+];
+const FEATURED = ['aigles','mauboussin','basket'];
+const inCat = (p,c) => c==='tous' || p.cat===c || (p.also||[]).includes(c);
+
+/* ======================= RENDU ======================= */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function card(p){
+  return `<a class="card rv" href="#projet-${p.id}">
+    <div class="thumb${p.contain?' contain':''}"><img src="${p.thumb}" alt="" loading="lazy">${p.video?`<span class="play">${play}</span>`:''}</div>
+    <div class="body"><h3>${esc(p.title)}</h3><p>${esc(p.card)}</p>
+    <div class="chips"><span class="chip cat">${CATS[p.cat]}</span><span class="chip">${esc(p.year)}</span></div></div></a>`;
+}
+document.getElementById('featured').innerHTML = FEATURED.map(id => card(P.find(p=>p.id===id))).join('');
+const uni = [
+  {c:'audiovisuel', t:'Audiovisuel', d:'Publicité, film de sensibilisation, tutoriel : cadrage, son et montage.', img:I+'aigles-poster.jpg'},
+  {c:'graphisme', t:'Graphisme & print', d:'Logos, chartes graphiques, affiches et mise en page de journal.', img:I+'affiche.webp'},
+  {c:'web', t:'Web', d:'Sites en HTML, CSS, JavaScript et PHP, du wireframe à la base de données.', img:I+'ftn.webp'}
+];
+document.getElementById('univers').innerHTML = uni.map(u => `<a class="card rv" href="#projets-${u.c}">
+  <div class="thumb"><img src="${u.img}" alt="" loading="lazy"></div>
+  <div class="body"><h3>${u.t}</h3><p>${u.d}</p><div class="chips"><span class="chip">${P.filter(p=>inCat(p,u.c)).length} projets</span></div></div></a>`).join('');
+
+const tabsEl = document.getElementById('tabs'), allEl = document.getElementById('all');
+const tabList = [['tous','Tous'],...Object.entries(CATS)];
+tabsEl.innerHTML = tabList.map(([k,l]) => `<button class="tab" type="button" data-cat="${k}" aria-pressed="false">${l}<span class="n">${P.filter(p=>inCat(p,k)).length}</span></button>`).join('');
+let curCat = null;
+function renderGrid(cat, animate){
+  const doit = () => {
+    allEl.innerHTML = P.filter(p=>inCat(p,cat)).map(card).join('');
+    tabsEl.querySelectorAll('.tab').forEach(b => b.setAttribute('aria-pressed', b.dataset.cat===cat));
+    observe(allEl);
+  };
+  if(animate && !reduce){ puff(); setTimeout(doit, 300); } else doit();
+  curCat = cat;
+}
+tabsEl.addEventListener('click', e => {
+  const b = e.target.closest('.tab'); if(!b) return;
+  const h = b.dataset.cat==='tous' ? 'projets' : 'projets-'+b.dataset.cat;
+  history.replaceState(null,'','#'+h); route(true);
+});
+
+function mediaBlock(m){
+  if(m.v) return `<figure class="frame"><video controls preload="metadata" playsinline poster="${m.poster}" src="${m.v}"></video><figcaption>${esc(m.cap)}</figcaption></figure>`;
+  if(m.img) return `<figure class="frame"><img src="${m.img}" alt="${esc(m.cap)}" loading="lazy"${m.contain?' style="object-fit:contain;background:#fff;padding:16px"':''}><figcaption>${esc(m.cap)}</figcaption></figure>`;
+  if(m.grid){
+    const inner = m.items.map(mediaBlock).join('');
+    if(m.grid==='vertical') return `<div class="media vertical">${inner}<div class="panel"><h3>Le format court</h3><p>Une vidéo verticale qui montre les coulisses de la fabrication du journal : l'équipe de rédaction, le chemin de fer au tableau et la mise en page.</p></div></div>`;
+    return `<div class="media ${m.grid}">${inner}</div>`;
+  }
+  return '';
+}
+function renderProject(id){
+  const i = P.findIndex(p=>p.id===id); if(i<0) return false;
+  const p = P[i], prev = P[(i-1+P.length)%P.length], next = P[(i+1)%P.length];
+  document.getElementById('proj').innerHTML = `
+    <a class="back" href="#projets">${arrowL}Tous les projets</a>
+    <span class="kicker">${CATS[p.cat]}</span>
+    <h1>${esc(p.title)}</h1>
+    <p class="tagline">${esc(p.tagline)}</p>
+    <div class="meta"><span class="chip">${esc(p.year)}</span><span class="chip">${esc(p.frame)}</span>${p.team?`<span class="chip">${esc(p.team)}</span>`:''}${p.tools.map(t=>`<span class="chip">${esc(t)}</span>`).join('')}</div>
+    <div class="media rv">${p.media.map(mediaBlock).join('')}</div>
+    <div class="cols">
+      <div class="panel rv"><h3>Le contexte</h3><p>${esc(p.context)}</p>${p.link?`<a class="btn ext" href="${p.link.href}" target="_blank" rel="noopener">${p.link.label}</a>`:''}</div>
+      <div class="panel rv"><h3>Mon rôle</h3><ul>${p.role.map(r=>`<li>${esc(r)}</li>`).join('')}</ul></div>
+    </div>
+    ${p.credits?`<div class="panel rv credits" style="margin-top:22px"><h3>Générique</h3><p>${esc(p.credits)}</p></div>`:''}
+    <nav class="pn" aria-label="Autres projets">
+      <a href="#projet-${prev.id}"><small>← Précédent</small><b>${esc(prev.title)}</b></a>
+      <a class="next" href="#projet-${next.id}"><small>Suivant →</small><b>${esc(next.title)}</b></a>
+    </nav>`;
+  observe(document.getElementById('proj'));
+  return true;
+}
+
+/* ======================= REVEAL ======================= */
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+}), {threshold:.12, rootMargin:'0px 0px -40px 0px'}) : null;
+function observe(root){
+  root.querySelectorAll('.rv:not(.in)').forEach((el,k) => {
+    el.style.transitionDelay = (Math.min(k,6)*70)+'ms';
+    if(io && !reduce) io.observe(el); else el.classList.add('in');
+  });
+}
+
+/* ======================= NUAGES PARALLAXE ======================= */
+const cloudLayer = document.getElementById('clouds');
+// 6 formes de nuages (aspect = hauteur / largeur)
+const SHAPES = [
+  {u:'assets/img/clouds.webp', r:.453}, {u:'assets/img/cl-a.webp', r:.783},
+  {u:'assets/img/cl-b.webp', r:.925}, {u:'assets/img/cl-c.webp', r:.939},
+  {u:'assets/img/cl-d.webp', r:.740}, {u:'assets/img/cl-e.webp', r:.573}
+];
+const rnd = (a,b) => a + Math.random()*(b-a);
+let CL = [], clEls = [];
+// nouvelle disposition à chaque page : formes, tailles, positions, sens et vitesses différents
+function buildClouds(){
+  cloudLayer.innerHTML = '';
+  const order = SHAPES.map((_,k)=>k).sort(()=>Math.random()-.5);
+  const n = 8; CL = [];
+  for(let k=0;k<n;k++){
+    const sh = SHAPES[order[k % SHAPES.length]];
+    const w = sh.r > .7 ? rnd(18,30) : rnd(30,48);
+    CL.push({ u:sh.u, r:sh.r, w,
+      x: (k%2 ? rnd(45,72) : rnd(-14,22)),
+      y: k*20 + rnd(-4,8),
+      o: rnd(.55,.95), s: rnd(.16,.6), d: rnd(26,60),
+      f: Math.random() < .5, sy: rnd(.85,1.15) });
+  }
+  clEls = CL.map(c => {
+    const d = document.createElement('div'); d.className = 'cl';
+    d.style.cssText = `background-image:url(${c.u});left:${c.x}vw;top:${c.y}vh;width:${c.w}vw;height:${c.w*c.r*c.sy}vw;opacity:${c.o};animation-duration:${c.d}s;animation-delay:${-rnd(0,c.d)}s`;
+    d.style.transform = `translate3d(0,0,0) scaleX(${c.f?-1:1})`;
+    cloudLayer.appendChild(d); return d;
+  });
+}
+buildClouds();
+
+/* ligne de pêche qui suit le scroll */
+let ticking = false;
+function onScroll(){
+  if(ticking) return; ticking = true;
+  requestAnimationFrame(() => {
+    const y = scrollY;
+    if(!reduce) clEls.forEach((el,k) => el.style.transform = `translate3d(0,${-y*CL[k].s}px,0) scaleX(${CL[k].f?-1:1})`);
+    ticking = false;
+  });
+}
+addEventListener('scroll', onScroll, {passive:true});
+addEventListener('resize', onScroll);
+
+/* bulles */
+const bub = document.getElementById('bubbles');
+for(let k=0;k<16;k++){ const s=document.createElement('span'), z=8+Math.random()*26;
+  s.style.cssText=`left:${Math.random()*100}%;width:${z}px;height:${z}px;animation-duration:${9+Math.random()*12}s;animation-delay:${-Math.random()*20}s`; bub.appendChild(s); }
+
+/* ======================= TRANSITIONS NUAGES ======================= */
+const curtain = document.getElementById('curtain');
+const puffs = [[-8,-10],[30,-14],[68,-8],[-14,30],[22,24],[60,28],[96,20],[-6,66],[34,62],[74,70],[10,96],[52,98],[88,90]];
+const cEls = puffs.map(([x,y],k) => { const c=document.createElement('div'); c.className='c';
+  const fromL = x < 45; c.dataset.off = fromL ? 'calc(-110vw - 70vmax)' : 'calc(110vw + 70vmax)';
+  c.style.left = (x-20)+'vw'; c.style.top = (y-20)+'vh';
+  c.style.transform = `translateX(${c.dataset.off}) scale(.9)`; c.style.transitionDelay = (k%5)*40+'ms';
+  curtain.appendChild(c); return c; });
+function closeCurtain(){ curtain.classList.add('closed'); cEls.forEach(c => c.style.transform='translateX(0) scale(1)'); }
+function openCurtain(){ cEls.forEach(c => c.style.transform=`translateX(${c.dataset.off}) scale(.9)`); curtain.classList.remove('closed'); }
+function puff(){
+  const el = document.getElementById('puff'); el.innerHTML='';
+  for(let k=0;k<14;k++){ const s=document.createElement('span'), z=120+Math.random()*180;
+    s.style.cssText=`left:${Math.random()*90}%;top:${Math.random()*80}%;width:${z}px;height:${z*.8}px;animation-delay:${Math.random()*120}ms`; el.appendChild(s); }
+  el.classList.add('go'); setTimeout(()=>el.classList.remove('go'), 1000);
+}
+
+/* ======================= ROUTEUR (#accueil, #projets, #projets-web, #projet-xxx, #a-propos, #contact) ======================= */
+let curView = null, first = true;
+function parse(){
+  const h = location.hash.slice(1) || 'accueil';
+  if(h.startsWith('projet-')) return {view:'projet', id:h.slice(7)};
+  if(h==='projets') return {view:'projets', cat:'tous'};
+  if(h.startsWith('projets-') && CATS[h.slice(8)]) return {view:'projets', cat:h.slice(8)};
+  if(['accueil','a-propos','contact'].includes(h)) return {view:h};
+  return {view:'accueil'};
+}
+function show(r){
+  if(r.view==='projet' && !renderProject(r.id)) r = {view:'projets', cat:'tous'};
+  const v = r.view==='contact' ? 'contact' : r.view;
+  document.querySelectorAll('.view').forEach(el => el.classList.toggle('active', el.id==='v-'+v));
+  const navKey = v==='projet' ? 'projets' : v;
+  document.querySelectorAll('.nav a').forEach(a => {
+    if(a.dataset.route===navKey) a.setAttribute('aria-current','page');
+    else a.removeAttribute('aria-current');
+  });
+  if(v==='projets') renderGrid(r.cat, false);
+  observe(document.getElementById('v-'+v));
+  observe(document.getElementById('contact-sec'));
+  document.querySelectorAll('.view:not(.active) video').forEach(x=>x.pause());
+  document.body.classList.toggle('is-contact', v==='contact');
+  scrollTo({top:0, behavior:'instant'});
+  if(curView !== v || v==='projet') buildClouds();
+  curView = v; onScroll();
+}
+function route(inPlace){
+  const r = parse();
+  // changement d'onglet dans la page projets : bouffée de nuages sur la grille
+  if(r.view==='projets' && curView==='projets'){ if(r.cat!==curCat) renderGrid(r.cat, true); return; }
+  if(first || reduce){ show(r); first=false; return; }
+  closeCurtain();
+  setTimeout(() => { show(r); setTimeout(openCurtain, 80); }, 720);
+}
+addEventListener('hashchange', () => route());
+document.querySelector('.nav .brand').addEventListener('click', e => { if(curView==='accueil'){ e.preventDefault(); scrollTo({top:0, behavior: reduce?'auto':'smooth'}); } });
+route(); first = false;
+
+/* copier l'e-mail */
+document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', async () => {
+  try{ await navigator.clipboard.writeText(b.dataset.copy); b.textContent='Copié !'; }
+  catch(e){ b.textContent='Sélectionne le texte'; }
+  setTimeout(()=>b.textContent='Copier', 1800);
+}));
+})();
+</script>
+</body>
+</html>
